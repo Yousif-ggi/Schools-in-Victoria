@@ -1,0 +1,139 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 260,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/types.json"
+  },
+  "encoding": {
+    "x": {
+      "field": "type",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Primary",
+        "Secondary",
+        "Pri/Sec",
+        "Special",
+        "Language"
+      ],
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 10
+      }
+    },
+    "y": {
+      "field": "sector",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Government",
+        "Catholic",
+        "Independent"
+      ]
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fff",
+        "strokeWidth": 4,
+        "cornerRadius": 3
+      },
+      "encoding": {
+        "color": {
+          "field": "share",
+          "type": "quantitative",
+          "title": "Share within sector",
+          "scale": {
+            "range": [
+              "#edf2e9",
+              "#165e53"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "format": ".0%"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "type",
+            "title": "School type",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "Schools",
+            "format": ",d",
+            "type": "quantitative"
+          },
+          {
+            "field": "share",
+            "title": "Within-sector share",
+            "format": ".1%",
+            "type": "quantitative"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "text": {
+          "field": "count"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.share > 0.4",
+            "value": "#fff"
+          },
+          "value": "#193d35"
+        }
+      }
+    }
+  ]
+}

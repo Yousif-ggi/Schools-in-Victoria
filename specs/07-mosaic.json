@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 310,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/mosaic.json"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fff",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "x0",
+          "type": "quantitative",
+          "title": null,
+          "axis": null
+        },
+        "x2": {
+          "field": "x1"
+        },
+        "y": {
+          "field": "y0",
+          "type": "quantitative",
+          "title": "Sector share",
+          "axis": {
+            "format": ".0%"
+          },
+          "scale": {
+            "domain": [
+              0,
+              1
+            ]
+          }
+        },
+        "y2": {
+          "field": "y1"
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#23766b",
+              "#bc6046",
+              "#c49b31"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "symbolType": "circle"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "region",
+            "title": "Department grouping",
+            "type": "nominal"
+          },
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "Schools",
+            "format": ",d",
+            "type": "quantitative"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fill": "#fff",
+        "fontSize": 14,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "x": {
+          "field": "xc",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "yc",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

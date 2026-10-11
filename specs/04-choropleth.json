@@ -1,0 +1,123 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 450,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/victoria-map.geojson",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "lookup": "properties.code",
+      "from": {
+        "data": {
+          "url": "data/lgas.json"
+        },
+        "key": "code",
+        "fields": [
+          "rate",
+          "schools",
+          "children",
+          "lga"
+        ]
+      }
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "#fff",
+    "strokeWidth": 0.6
+  },
+  "encoding": {
+    "color": {
+      "field": "rate",
+      "type": "quantitative",
+      "title": "Schools / 1,000 residents aged 5–19",
+      "scale": {
+        "type": "threshold",
+        "domain": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "range": [
+          "#edf3e8",
+          "#c8dfce",
+          "#83b6a0",
+          "#418d79",
+          "#145747"
+        ]
+      },
+      "legend": {
+        "orient": "bottom",
+        "direction": "horizontal",
+        "titleLimit": 360
+      }
+    },
+    "tooltip": [
+      {
+        "field": "lga",
+        "title": "LGA",
+        "type": "nominal"
+      },
+      {
+        "field": "schools",
+        "title": "Mainstream physical schools",
+        "format": ",d",
+        "type": "quantitative"
+      },
+      {
+        "field": "children",
+        "title": "Residents aged 5–19",
+        "format": ",d",
+        "type": "quantitative"
+      },
+      {
+        "field": "rate",
+        "title": "Schools per 1,000",
+        "format": ".2f",
+        "type": "quantitative"
+      }
+    ]
+  }
+}

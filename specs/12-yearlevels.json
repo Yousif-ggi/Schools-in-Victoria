@@ -1,0 +1,123 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/yearlevels.json"
+  },
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 2,
+    "cornerRadiusTopRight": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "year_label",
+      "type": "ordinal",
+      "title": "Year level",
+      "sort": [
+        "Prep",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "fte",
+      "type": "quantitative",
+      "title": "Share of enrolments at each year level",
+      "stack": "normalize",
+      "axis": {
+        "format": ".0%"
+      }
+    },
+    "color": {
+      "field": "sector",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Government",
+          "Catholic",
+          "Independent"
+        ],
+        "range": [
+          "#23766b",
+          "#bc6046",
+          "#c49b31"
+        ]
+      },
+      "legend": {
+        "title": null,
+        "orient": "top",
+        "symbolType": "circle"
+      }
+    },
+    "order": {
+      "field": "sector",
+      "sort": "descending"
+    },
+    "tooltip": [
+      {
+        "field": "sector",
+        "title": "Sector",
+        "type": "nominal"
+      },
+      {
+        "field": "year_label",
+        "title": "Year level",
+        "type": "nominal"
+      },
+      {
+        "field": "fte",
+        "title": "Enrolment (FTE)",
+        "format": ",.1f",
+        "type": "quantitative"
+      }
+    ]
+  }
+}

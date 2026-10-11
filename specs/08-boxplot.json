@@ -1,0 +1,110 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/schools.json"
+  },
+  "params": [
+    {
+      "name": "schoolType",
+      "value": "Primary",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Primary",
+          "Secondary",
+          "Pri/Sec"
+        ],
+        "name": "Compare school type "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.type === schoolType && datum.fte > 0 && datum.physical_mainstream"
+    }
+  ],
+  "mark": {
+    "type": "boxplot",
+    "extent": 1.5,
+    "size": 42,
+    "outliers": {
+      "size": 12,
+      "opacity": 0.35
+    },
+    "median": {
+      "color": "#fff"
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "sector",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Government",
+        "Catholic",
+        "Independent"
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "fte",
+      "type": "quantitative",
+      "title": "Enrolment per school (FTE)"
+    },
+    "color": {
+      "field": "sector",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Government",
+          "Catholic",
+          "Independent"
+        ],
+        "range": [
+          "#23766b",
+          "#bc6046",
+          "#c49b31"
+        ]
+      },
+      "legend": null
+    }
+  }
+}

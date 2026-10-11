@@ -1,0 +1,168 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 340,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#5b6664",
+      "titleColor": "#384844",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "titleFontWeight": 400,
+      "gridColor": "#e5e8e2",
+      "domain": false,
+      "tickColor": "#cbd2cb",
+      "titlePadding": 12,
+      "labelPadding": 7
+    },
+    "legend": {
+      "labelColor": "#394943",
+      "labelFontSize": 11,
+      "titleFontSize": 11,
+      "padding": 6
+    },
+    "title": {
+      "anchor": "start",
+      "color": "#163e35"
+    }
+  },
+  "data": {
+    "url": "data/lgas.json"
+  },
+  "transform": [
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "children",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank <= 8"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "lga",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "children",
+        "order": "descending"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#cdd8d0"
+      },
+      "encoding": {
+        "x": {
+          "field": "secondary_schools",
+          "type": "quantitative",
+          "title": "Schools serving each stage",
+          "scale": {
+            "domain": [
+              0,
+              85
+            ]
+          }
+        },
+        "x2": {
+          "field": "primary_schools"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "primary_schools",
+            "secondary_schools"
+          ],
+          "as": [
+            "stage",
+            "count"
+          ]
+        },
+        {
+          "calculate": "datum.stage === 'primary_schools' ? 'Primary' : 'Secondary'",
+          "as": "stage_label"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 100
+      },
+      "encoding": {
+        "x": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Schools serving each stage"
+        },
+        "color": {
+          "field": "stage_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Primary",
+              "Secondary"
+            ],
+            "range": [
+              "#23766b",
+              "#bc6046"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "stage_label",
+            "title": "Stage",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "Schools",
+            "format": ",d",
+            "type": "quantitative"
+          },
+          {
+            "field": "children",
+            "title": "Residents aged 5–19",
+            "format": ",d",
+            "type": "quantitative"
+          }
+        ]
+      }
+    }
+  ]
+}
