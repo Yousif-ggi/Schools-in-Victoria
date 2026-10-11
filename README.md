@@ -1,6 +1,6 @@
 # Schools in Victoria
 
-An interactive Data Visualisation 2 studio draft by Yousif Gaggi.
+Data Visualisation 2 — Draft V2, by Yousif Gaggi.
 
 **Public visualisation:** https://Yousif-ggi.github.io/Schools-in-Victoria/
 
@@ -26,4 +26,4 @@ Publish from branch `main`, folder `/ (root)`. No build step is required.
 
 Prepared for studio critique on layout, chart choices, legibility and storytelling. It is not labelled as the final assessment submission. The hand-drawn A4 sketch is separate.
 
-AI assistance is acknowledged on the page and in the methodology. Source data retain their publishers' licences and attribution; the chart libraries retain their own licences.
+Source data retain their publishers' licences and attribution; the chart libraries retain their own licences.

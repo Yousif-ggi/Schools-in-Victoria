@@ -1,6 +1,6 @@
 # Sources and methodology
 
-Author: Yousif Gaggi. Studio critique draft, 12 October 2026.
+Author: Yousif Gaggi. Draft V2, 12 October 2026.
 
 ## Sources
 
@@ -50,8 +50,8 @@ Enrolments are FTE, not capacity or unique headcount. Students can live in anoth
 - Dorling cartogram circle area represents population. Geographic centres are displaced by a deterministic collision-relaxation layout to reduce overlap, with an attraction toward original centres. It represents neither actual boundaries nor individual children. Small labels are omitted; all areas have tooltips.
 - Maps use a Mercator projection over Victoria. Boundaries are simplified with the ABS service (output EPSG:4326, maximum allowable offset 0.005 degrees, precision 4). Ring winding is adapted for Vega/D3 rendering. Two non-spatial special codes are excluded. Geometry simplification never changes statistical counts.
 
-## Implementation and acknowledgement
+## Implementation
 
 The site uses local copies of Vega 5.30.0, Vega-Lite 5.20.1 and Vega-Embed 6.26.0. Source specifications are readable JSON in `specs/`. Vega renders the treemap; Vega-Lite renders the other charts. Rendering and filters run in the browser. No analytics or form submission is included.
 
-OpenAI Codex assisted with source research, data checking, preparation, code, visual design and draft text. The author is reviewing and refining the work through studio critique. The hand-drawn sketch is a separate later submission item.
+This draft is prepared for studio critique. The hand-drawn sketch is a separate later submission item.
