@@ -1,0 +1,237 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "params": [
+    {
+      "name": "schoolType",
+      "value": "Primary",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Primary",
+          "Secondary",
+          "Pri/Sec"
+        ],
+        "labels": [
+          "Primary",
+          "Secondary",
+          "Combined primary/secondary"
+        ],
+        "name": "School type "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "data/schools.json?v=20261027audited2"
+      },
+      "transform": [
+        {
+          "filter": "datum.type===schoolType && datum.fte>0 && datum.physical_mainstream"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 27,
+        "opacity": 0.36,
+        "clip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "fte",
+          "type": "quantitative",
+          "title": "Enrolment per school (FTE)"
+        },
+        "y": {
+          "field": "sector",
+          "type": "nominal",
+          "title": null,
+          "sort": [
+            "Government",
+            "Catholic",
+            "Independent"
+          ]
+        },
+        "yOffset": {
+          "field": "jitter",
+          "type": "quantitative",
+          "title": null,
+          "scale": {
+            "domain": [
+              0,
+              1
+            ]
+          }
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#3d6b8a",
+              "#a75b3b",
+              "#347d72"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "School",
+            "type": "nominal"
+          },
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "fte",
+            "title": "Enrolment (FTE)",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/medians.json?v=20261027audited2"
+      },
+      "transform": [
+        {
+          "filter": "datum.type===schoolType"
+        }
+      ],
+      "mark": {
+        "type": "tick",
+        "orient": "vertical",
+        "thickness": 3,
+        "size": 46,
+        "color": "#152d3c"
+      },
+      "encoding": {
+        "x": {
+          "field": "median",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "sector",
+          "type": "nominal",
+          "title": null,
+          "sort": [
+            "Government",
+            "Catholic",
+            "Independent"
+          ]
+        },
+        "tooltip": [
+          {
+            "field": "median",
+            "title": "Median FTE",
+            "type": "quantitative",
+            "format": ",.0f"
+          },
+          {
+            "field": "n",
+            "title": "Schools in comparison",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/medians.json?v=20261027audited2"
+      },
+      "transform": [
+        {
+          "filter": "datum.type===schoolType"
+        },
+        {
+          "calculate": "'Median '+format(datum.median,',.0f')",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "dy": -43,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#233441"
+      },
+      "encoding": {
+        "x": {
+          "field": "median",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "sector",
+          "type": "nominal",
+          "title": null,
+          "sort": [
+            "Government",
+            "Catholic",
+            "Independent"
+          ]
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

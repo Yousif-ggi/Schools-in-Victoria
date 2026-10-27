@@ -1,0 +1,216 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 315,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/lgas.json?v=20261027audited2"
+  },
+  "transform": [
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "children",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank<=8"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "lga",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "children",
+        "order": "descending"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#bdc5cb"
+      },
+      "encoding": {
+        "x": {
+          "field": "secondary_schools",
+          "type": "quantitative",
+          "title": "School records",
+          "scale": {
+            "domain": [
+              0,
+              85
+            ]
+          },
+          "axis": {
+            "tickCount": 8
+          }
+        },
+        "x2": {
+          "field": "primary_schools"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "primary_schools",
+            "secondary_schools"
+          ],
+          "as": [
+            "stage",
+            "count"
+          ]
+        },
+        {
+          "calculate": "datum.stage==='primary_schools'?'Primary':'Secondary'",
+          "as": "stage_label"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 95
+      },
+      "encoding": {
+        "x": {
+          "field": "count",
+          "type": "quantitative"
+        },
+        "shape": {
+          "field": "stage_label",
+          "scale": {
+            "domain": [
+              "Primary",
+              "Secondary"
+            ],
+            "range": [
+              "circle",
+              "square"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top"
+          }
+        },
+        "color": {
+          "condition": {
+            "test": "datum.stage_label==='Primary'",
+            "value": "#263744"
+          },
+          "value": "#8a949d"
+        },
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "stage_label",
+            "title": "Stage",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "Schools",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#233441"
+      },
+      "encoding": {
+        "x": {
+          "field": "primary_schools",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "primary_schools"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 12,
+        "color": "#4c5b68"
+      },
+      "encoding": {
+        "x": {
+          "field": "secondary_schools",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "secondary_schools"
+        }
+      }
+    }
+  ]
+}

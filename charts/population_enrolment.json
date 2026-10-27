@@ -1,0 +1,188 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 355,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/lgas.json?v=20261027audited2"
+  },
+  "params": [
+    {
+      "name": "focusLga",
+      "value": "Wyndham"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "children",
+      "type": "quantitative",
+      "title": "Residents aged 5–19",
+      "axis": {
+        "format": "~s"
+      },
+      "scale": {
+        "domain": [
+          0,
+          100000
+        ]
+      }
+    },
+    "y": {
+      "field": "fte",
+      "type": "quantitative",
+      "title": "FTE assigned to recorded LGA",
+      "axis": {
+        "format": "~s"
+      },
+      "scale": {
+        "domain": [
+          0,
+          80000
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "size": 90,
+        "stroke": "#fff",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.lga===focusLga",
+            "value": "#293c4d"
+          },
+          "value": "#78512f"
+        },
+        "opacity": {
+          "condition": {
+            "test": "focusLga==='All LGAs' || datum.lga===focusLga",
+            "value": 0.95
+          },
+          "value": 0.45
+        },
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "children",
+            "title": "Residents aged 5–19",
+            "type": "quantitative",
+            "format": ",d"
+          },
+          {
+            "field": "fte",
+            "title": "Assigned school FTE",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "schools",
+            "title": "Mainstream school records",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.lga===focusLga"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": {
+          "expr": "datum.children<15000?'left':'right'"
+        },
+        "dx": {
+          "expr": "datum.children<15000?9:-9"
+        },
+        "dy": -13,
+        "fontSize": 13,
+        "fontWeight": 700,
+        "stroke": "#fff",
+        "strokeWidth": 4
+      },
+      "encoding": {
+        "text": {
+          "field": "lga"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.lga===focusLga"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": {
+          "expr": "datum.children<15000?'left':'right'"
+        },
+        "dx": {
+          "expr": "datum.children<15000?9:-9"
+        },
+        "dy": -13,
+        "fontSize": 13,
+        "fontWeight": 700,
+        "color": "#233441"
+      },
+      "encoding": {
+        "text": {
+          "field": "lga"
+        }
+      }
+    }
+  ]
+}

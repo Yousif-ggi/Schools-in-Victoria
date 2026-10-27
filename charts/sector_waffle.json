@@ -1,0 +1,181 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 270,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/waffle.json?v=20261027audited2"
+  },
+  "transform": [
+    {
+      "calculate": "datum.col + (datum.metric === 'School records' ? 0 : 12)",
+      "as": "x0"
+    },
+    {
+      "calculate": "datum.x0 + 0.82",
+      "as": "x1"
+    },
+    {
+      "calculate": "datum.row + 0.82",
+      "as": "y1"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "cornerRadius": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "x0",
+          "type": "quantitative",
+          "title": null,
+          "axis": null,
+          "scale": {
+            "domain": [
+              -0.4,
+              22
+            ]
+          }
+        },
+        "x2": {
+          "field": "x1"
+        },
+        "y": {
+          "field": "row",
+          "type": "quantitative",
+          "title": null,
+          "axis": null,
+          "scale": {
+            "domain": [
+              10,
+              -2
+            ]
+          }
+        },
+        "y2": {
+          "field": "y1"
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#3d6b8a",
+              "#a75b3b",
+              "#347d72"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "bottom",
+            "symbolType": "circle",
+            "labelFontSize": 12
+          }
+        },
+        "tooltip": [
+          {
+            "field": "metric",
+            "title": "Measure",
+            "type": "nominal"
+          },
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "share",
+            "title": "Exact share",
+            "type": "quantitative",
+            "format": ".1%"
+          },
+          {
+            "field": "total",
+            "title": "Total",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 4.4,
+            "label": "School records"
+          },
+          {
+            "x": 16.4,
+            "label": "Enrolments (FTE)"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "datum": -1
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

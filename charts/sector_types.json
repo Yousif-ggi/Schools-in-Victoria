@@ -1,0 +1,162 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 290,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/types.json?v=20261027audited2"
+  },
+  "encoding": {
+    "x": {
+      "field": "type",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Primary",
+        "Secondary",
+        "Pri/Sec",
+        "Special",
+        "Language"
+      ],
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 11
+      }
+    },
+    "y": {
+      "field": "sector",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Government",
+        "Catholic",
+        "Independent"
+      ]
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fff",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "color": {
+          "field": "share",
+          "type": "quantitative",
+          "title": "Share of schools within each sector",
+          "scale": {
+            "domain": [
+              0,
+              1
+            ],
+            "range": [
+              "#faf2e5",
+              "#58391f"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "format": ".0%",
+            "gradientLength": 240,
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "titleLimit": 350
+          }
+        },
+        "tooltip": [
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "type",
+            "title": "School type",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "Schools",
+            "type": "quantitative",
+            "format": ",d"
+          },
+          {
+            "field": "share",
+            "title": "Within-sector share",
+            "type": "quantitative",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "text": {
+          "field": "share",
+          "type": "quantitative",
+          "format": ".1%"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.share > .55",
+            "value": "#fff"
+          },
+          "value": "#233441"
+        }
+      }
+    }
+  ]
+}

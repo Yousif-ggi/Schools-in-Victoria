@@ -1,0 +1,196 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 270,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "sector": "Government",
+        "start": 1528,
+        "end": 1593,
+        "net": 65,
+        "growth": 0.04253926701570681,
+        "label": "+4.3%  (+65 schools)"
+      },
+      {
+        "sector": "Catholic",
+        "start": 492,
+        "end": 494,
+        "net": 2,
+        "growth": 0.0040650406504065045,
+        "label": "+0.4%  (+2 schools)"
+      },
+      {
+        "sector": "Independent",
+        "start": 219,
+        "end": 233,
+        "net": 14,
+        "growth": 0.0639269406392694,
+        "label": "+6.4%  (+14 schools)"
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "growth",
+      "type": "quantitative",
+      "title": "Net change in school count, 2017–2026",
+      "scale": {
+        "domain": [
+          0,
+          0.09
+        ]
+      },
+      "axis": {
+        "format": ".0%",
+        "values": [
+          0,
+          0.02,
+          0.04,
+          0.06,
+          0.08
+        ]
+      }
+    },
+    "y": {
+      "field": "sector",
+      "type": "nominal",
+      "sort": [
+        "Independent",
+        "Government",
+        "Catholic"
+      ],
+      "title": null
+    },
+    "color": {
+      "field": "sector",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Government",
+          "Catholic",
+          "Independent"
+        ],
+        "range": [
+          "#3d6b8a",
+          "#a75b3b",
+          "#347d72"
+        ]
+      },
+      "legend": null
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x2": {
+          "datum": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 130
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "sector",
+            "type": "nominal",
+            "title": "Sector"
+          },
+          {
+            "field": "start",
+            "type": "quantitative",
+            "title": "2017 schools"
+          },
+          {
+            "field": "end",
+            "type": "quantitative",
+            "title": "2026 schools"
+          },
+          {
+            "field": "net",
+            "type": "quantitative",
+            "title": "Net change"
+          },
+          {
+            "field": "growth",
+            "type": "quantitative",
+            "title": "Percentage change",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": 0,
+        "dy": -17,
+        "fontSize": 12,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "text": {
+          "field": "label"
+        },
+        "color": {
+          "value": "#233441"
+        },
+        "x": {
+          "datum": 0.088
+        }
+      }
+    }
+  ]
+}

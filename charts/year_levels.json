@@ -1,0 +1,200 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 300,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/yearlevels.json?v=20261027audited2"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "stroke": "#fff",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "title": "Year level",
+          "sort": [
+            "Prep",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "axis": {
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "fte",
+          "type": "quantitative",
+          "title": "Share of enrolment",
+          "stack": "normalize",
+          "axis": {
+            "format": ".0%"
+          }
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#3d6b8a",
+              "#a75b3b",
+              "#347d72"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "bottom",
+            "symbolType": "circle",
+            "labelFontSize": 12
+          }
+        },
+        "order": {
+          "field": "sector",
+          "sort": "descending"
+        },
+        "tooltip": [
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "year_label",
+            "title": "Year",
+            "type": "nominal"
+          },
+          {
+            "field": "share",
+            "title": "Share at this year level",
+            "type": "quantitative",
+            "format": ".1%"
+          },
+          {
+            "field": "fte",
+            "title": "FTE",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year_label": "6",
+            "label": "66%",
+            "centre": 0.47792414823748103
+          },
+          {
+            "year_label": "7",
+            "label": "54%",
+            "centre": 0.49583974407253195
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "color": "#fff",
+        "fontSize": 11,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": [
+            "Prep",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
+        "y": {
+          "field": "centre",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        },
+        "yOffset": {
+          "condition": {
+            "test": "datum.year_label === '6'",
+            "value": -12
+          },
+          "value": 12
+        }
+      }
+    }
+  ]
+}

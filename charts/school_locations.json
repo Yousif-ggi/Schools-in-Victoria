@@ -1,0 +1,289 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 480,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "params": [
+    {
+      "name": "mapView",
+      "value": "Victoria",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Victoria",
+          "Melbourne area"
+        ],
+        "name": "Map area "
+      }
+    },
+    {
+      "name": "sectorFilter",
+      "value": "All sectors",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All sectors",
+          "Government",
+          "Catholic",
+          "Independent"
+        ],
+        "name": "Sector "
+      }
+    },
+    {
+      "name": "typeFilter",
+      "value": "All types",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All types",
+          "Primary",
+          "Secondary",
+          "Pri/Sec",
+          "Special",
+          "Language"
+        ],
+        "name": "School type "
+      }
+    },
+    {
+      "name": "lgaFilter",
+      "value": "All areas",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All areas",
+          "Alpine",
+          "Ararat",
+          "Ballarat",
+          "Banyule",
+          "Bass Coast",
+          "Baw Baw",
+          "Bayside (Vic.)",
+          "Benalla",
+          "Boroondara",
+          "Brimbank",
+          "Buloke",
+          "Campaspe",
+          "Cardinia",
+          "Casey",
+          "Central Goldfields",
+          "Colac Otway",
+          "Corangamite",
+          "Darebin",
+          "East Gippsland",
+          "Frankston",
+          "Gannawarra",
+          "Glen Eira",
+          "Glenelg",
+          "Golden Plains",
+          "Greater Bendigo",
+          "Greater Dandenong",
+          "Greater Geelong",
+          "Greater Shepparton",
+          "Hepburn",
+          "Hindmarsh",
+          "Hobsons Bay",
+          "Horsham",
+          "Hume",
+          "Indigo",
+          "Kingston (Vic.)",
+          "Knox",
+          "Latrobe (Vic.)",
+          "Loddon",
+          "Macedon Ranges",
+          "Manningham",
+          "Mansfield",
+          "Maribyrnong",
+          "Maroondah",
+          "Melbourne",
+          "Melton",
+          "Merri-bek",
+          "Mildura",
+          "Mitchell",
+          "Moira",
+          "Monash",
+          "Moonee Valley",
+          "Moorabool",
+          "Mornington Peninsula",
+          "Mount Alexander",
+          "Moyne",
+          "Murrindindi",
+          "Nillumbik",
+          "Northern Grampians",
+          "Port Phillip",
+          "Pyrenees",
+          "Queenscliffe",
+          "South Gippsland",
+          "Southern Grampians",
+          "Stonnington",
+          "Strathbogie",
+          "Surf Coast",
+          "Swan Hill",
+          "Towong",
+          "Unincorporated Vic",
+          "Wangaratta",
+          "Warrnambool",
+          "Wellington",
+          "West Wimmera",
+          "Whitehorse",
+          "Whittlesea",
+          "Wodonga",
+          "Wyndham",
+          "Yarra",
+          "Yarra Ranges",
+          "Yarriambiack"
+        ],
+        "name": "Council area "
+      }
+    }
+  ],
+  "projection": {
+    "type": "mercator",
+    "center": {
+      "expr": "mapView === 'Victoria' ? [145.4,-36.7] : [145.03,-37.87]"
+    },
+    "scale": {
+      "expr": "mapView === 'Victoria' ? min(width * 5.8, height * 7.5) : min(width * 23, height * 28)"
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/victoria-map.geojson?v=20261027audited2",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e5e9ea",
+        "stroke": "#fff",
+        "strokeWidth": 0.7,
+        "clip": true
+      }
+    },
+    {
+      "data": {
+        "url": "data/schools.json?v=20261027audited2"
+      },
+      "transform": [
+        {
+          "filter": "(sectorFilter === 'All sectors' || datum.sector === sectorFilter) && (typeFilter === 'All types' || datum.type === typeFilter) && (lgaFilter === 'All areas' || datum.lga === lgaFilter)"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": {
+          "expr": "lgaFilter !== 'All areas' ? 55 : mapView === 'Victoria' ? 8 : 15"
+        },
+        "opacity": 0.65,
+        "stroke": "#fff",
+        "strokeWidth": 0.2,
+        "clip": true
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#3d6b8a",
+              "#a75b3b",
+              "#347d72"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "bottom",
+            "symbolType": "circle",
+            "labelFontSize": 12
+          }
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "School",
+            "type": "nominal"
+          },
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "type",
+            "title": "Type",
+            "type": "nominal"
+          },
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "fte",
+            "title": "Enrolment (FTE)",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    }
+  ]
+}

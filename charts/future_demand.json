@@ -1,0 +1,174 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 370,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/projections.json?v=20261027audited2"
+  },
+  "transform": [
+    {
+      "filter": "datum.rank <= 8"
+    },
+    {
+      "calculate": "'+' + format(round(datum.change/100)*100, ',')",
+      "as": "label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "lga",
+      "type": "nominal",
+      "sort": {
+        "field": "rank",
+        "order": "ascending"
+      },
+      "title": null,
+      "axis": {
+        "labelLimit": 120
+      }
+    },
+    "x": {
+      "field": "start",
+      "type": "quantitative",
+      "title": "Projected residents aged 5–19",
+      "scale": {
+        "domain": [
+          0,
+          140000
+        ]
+      },
+      "axis": {
+        "format": "~s",
+        "tickCount": 5
+      }
+    },
+    "tooltip": [
+      {
+        "field": "lga",
+        "title": "Area"
+      },
+      {
+        "field": "start",
+        "type": "quantitative",
+        "title": "2026 projection",
+        "format": ",.0f"
+      },
+      {
+        "field": "end",
+        "type": "quantitative",
+        "title": "2036 projection",
+        "format": ",.0f"
+      },
+      {
+        "field": "change",
+        "type": "quantitative",
+        "title": "Projected change",
+        "format": "+,.0f"
+      },
+      {
+        "field": "growth",
+        "type": "quantitative",
+        "title": "Projected growth",
+        "format": "+.1%"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#b9a48b"
+      },
+      "encoding": {
+        "x2": {
+          "field": "end"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "fill": "white",
+        "stroke": "#654321",
+        "strokeWidth": 2,
+        "size": 75
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#654321",
+        "size": 85
+      },
+      "encoding": {
+        "x": {
+          "field": "end",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 9,
+        "fontSize": 11,
+        "color": "#493423"
+      },
+      "encoding": {
+        "x": {
+          "field": "end",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

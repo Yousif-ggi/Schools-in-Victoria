@@ -1,0 +1,225 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 375,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "params": [
+    {
+      "name": "mapView",
+      "value": "Melbourne area",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Victoria",
+          "Melbourne area"
+        ],
+        "name": "Map area "
+      }
+    },
+    {
+      "name": "focusLga",
+      "value": "Wyndham"
+    }
+  ],
+  "projection": {
+    "type": "mercator",
+    "center": {
+      "expr": "mapView === 'Victoria' ? [145.4,-36.7] : [145.03,-37.87]"
+    },
+    "scale": {
+      "expr": "mapView === 'Victoria' ? min(width * 5.8, height * 7.5) : min(width * 23, height * 28)"
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/victoria-map.geojson?v=20261027audited2",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.code",
+          "from": {
+            "data": {
+              "url": "data/lgas.json?v=20261027audited2"
+            },
+            "key": "code",
+            "fields": [
+              "residents_per_school",
+              "schools",
+              "children",
+              "lga"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fff",
+        "strokeWidth": 0.7,
+        "clip": true
+      },
+      "encoding": {
+        "color": {
+          "field": "residents_per_school",
+          "type": "quantitative",
+          "title": "Residents aged 5–19 per school",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              250,
+              500,
+              750,
+              1000
+            ],
+            "range": [
+              "#f5ebdc",
+              "#dfc8a8",
+              "#bea07a",
+              "#957047",
+              "#604024"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "titleLimit": 400,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "residents_per_school",
+            "title": "Young residents per school",
+            "type": "quantitative",
+            "format": ",.0f"
+          },
+          {
+            "field": "schools",
+            "title": "Mainstream school records",
+            "type": "quantitative",
+            "format": ",d"
+          },
+          {
+            "field": "children",
+            "title": "Residents aged 5–19",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/victoria-map.geojson?v=20261027audited2",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.code",
+          "from": {
+            "data": {
+              "url": "data/lgas.json?v=20261027audited2"
+            },
+            "key": "code",
+            "fields": [
+              "residents_per_school",
+              "schools",
+              "children",
+              "lga"
+            ]
+          }
+        },
+        {
+          "filter": "datum.lga===focusLga"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "#162f40",
+        "strokeWidth": 2.5,
+        "clip": true
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "residents_per_school",
+            "title": "Young residents per school",
+            "type": "quantitative",
+            "format": ",.0f"
+          },
+          {
+            "field": "schools",
+            "title": "Mainstream school records",
+            "type": "quantitative",
+            "format": ",d"
+          },
+          {
+            "field": "children",
+            "title": "Residents aged 5–19",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ]
+      }
+    }
+  ]
+}

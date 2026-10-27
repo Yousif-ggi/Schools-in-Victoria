@@ -1,0 +1,198 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 375,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/cartogram.json?v=20261027audited2"
+  },
+  "encoding": {
+    "x": {
+      "field": "x",
+      "type": "quantitative",
+      "title": null,
+      "axis": null,
+      "scale": {
+        "domain": [
+          -12,
+          543.6008182379635
+        ]
+      }
+    },
+    "y": {
+      "field": "y",
+      "type": "quantitative",
+      "title": null,
+      "axis": null,
+      "scale": {
+        "domain": [
+          458.166959764391,
+          -12
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "stroke": "#fff",
+        "strokeWidth": 1.4,
+        "opacity": 0.9
+      },
+      "encoding": {
+        "size": {
+          "field": "children",
+          "type": "quantitative",
+          "title": "Residents aged 5–19",
+          "scale": {
+            "range": [
+              0,
+              4000
+            ],
+            "domain": [
+              0,
+              90000
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "values": [
+              5000,
+              25000,
+              80000
+            ],
+            "format": "~s"
+          }
+        },
+        "color": {
+          "value": "#78512f"
+        },
+        "tooltip": [
+          {
+            "field": "lga",
+            "title": "LGA",
+            "type": "nominal"
+          },
+          {
+            "field": "children",
+            "title": "Residents aged 5–19",
+            "type": "quantitative",
+            "format": ",d"
+          }
+        ],
+        "stroke": {
+          "condition": {
+            "test": "datum.lga===focusLga",
+            "value": "#162f40"
+          },
+          "value": "#fff"
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum.lga===focusLga",
+            "value": 2.5
+          },
+          "value": 1.4
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.lga===focusLga || indexof(['Mildura','East Gippsland'],datum.lga)>=0 || (focusLga==='Wyndham' && indexof(['Casey','Hume'],datum.lga)>=0)"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "fill": "#233441",
+        "fontWeight": 700,
+        "stroke": "#fff",
+        "strokeWidth": 3,
+        "align": {
+          "expr": "datum.x<100?'left':datum.x>440?'right':'center'"
+        },
+        "dx": {
+          "expr": "datum.x<100?8:datum.x>440?-8:0"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "lga"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.lga===focusLga || indexof(['Mildura','East Gippsland'],datum.lga)>=0 || (focusLga==='Wyndham' && indexof(['Casey','Hume'],datum.lga)>=0)"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "fill": "#233441",
+        "fontWeight": 700,
+        "align": {
+          "expr": "datum.x<100?'left':datum.x>440?'right':'center'"
+        },
+        "dx": {
+          "expr": "datum.x<100?8:datum.x>440?-8:0"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "lga"
+        }
+      }
+    }
+  ],
+  "params": [
+    {
+      "name": "focusLga",
+      "value": "Wyndham"
+    }
+  ]
+}

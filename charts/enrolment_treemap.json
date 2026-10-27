@@ -1,0 +1,206 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 600,
+  "height": 330,
+  "padding": 2,
+  "autosize": "fit",
+  "background": "transparent",
+  "data": [
+    {
+      "name": "tree",
+      "url": "data/treemap.json?v=20261027audited2",
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "treemap",
+          "field": "value",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "method": "squarify",
+          "paddingInner": 3,
+          "paddingOuter": 2,
+          "paddingTop": 24,
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    },
+    {
+      "name": "branches",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth === 1"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Government",
+        "Catholic",
+        "Independent"
+      ],
+      "range": [
+        "#3d6b8a",
+        "#a75b3b",
+        "#347d72"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "scale": "color",
+            "field": "sector"
+          },
+          "cornerRadius": {
+            "value": 2
+          },
+          "tooltip": {
+            "signal": "{'Sector':datum.sector,'School type':datum.name,'Enrolment (FTE)':format(datum.value,',.1f')}"
+          }
+        },
+        "hover": {
+          "fillOpacity": {
+            "value": 0.8
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0+7"
+          },
+          "y": {
+            "signal": "datum.y0+15"
+          },
+          "text": {
+            "signal": "datum.x1-datum.x0>76 && datum.y1-datum.y0>32 ? (datum.name==='Pri/Sec'?'Combined':datum.name) : ''"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "font": {
+            "value": "DM Sans"
+          },
+          "fill": {
+            "value": "#fff"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "branches"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0+4"
+          },
+          "y": {
+            "signal": "datum.y0+12"
+          },
+          "text": {
+            "field": "name"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "font": {
+            "value": "DM Sans"
+          },
+          "fill": {
+            "value": "#173c33"
+          },
+          "limit": {
+            "signal": "max(0,datum.x1-datum.x0-8)"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0+7"
+          },
+          "y": {
+            "signal": "datum.y0+31"
+          },
+          "text": {
+            "signal": "datum.x1-datum.x0>95 && datum.y1-datum.y0>52 ? format(datum.value,',.0f')+' FTE' : ''"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "font": {
+            "value": "DM Sans"
+          },
+          "fill": {
+            "value": "#fff"
+          }
+        }
+      }
+    }
+  ]
+}

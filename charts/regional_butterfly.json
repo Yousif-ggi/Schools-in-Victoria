@@ -1,0 +1,162 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 290,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "background": "transparent",
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelColor": "#425361",
+      "titleColor": "#233441",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 500,
+      "gridColor": "#e4e8eb",
+      "domain": false,
+      "ticks": false,
+      "titlePadding": 12,
+      "labelPadding": 8,
+      "labelLimit": 150
+    },
+    "legend": {
+      "labelColor": "#233441",
+      "titleColor": "#233441",
+      "labelFont": "DM Sans",
+      "titleFont": "DM Sans",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "text": {
+      "font": "DM Sans",
+      "color": "#233441"
+    },
+    "title": {
+      "font": "DM Sans",
+      "color": "#233441"
+    }
+  },
+  "data": {
+    "url": "data/regions.json?v=20261027audited2"
+  },
+  "encoding": {
+    "y": {
+      "field": "sector",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Government",
+        "Catholic",
+        "Independent"
+      ],
+      "axis": {
+        "labelLimit": 110
+      }
+    },
+    "x": {
+      "field": "signed",
+      "type": "quantitative",
+      "title": "Share of school records",
+      "scale": {
+        "domain": [
+          -0.98,
+          0.98
+        ]
+      },
+      "axis": {
+        "values": [
+          -0.8,
+          -0.4,
+          0,
+          0.4,
+          0.8
+        ],
+        "labelExpr": "format(abs(datum.value), '.0%')"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "size": 34
+      },
+      "encoding": {
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Government",
+              "Catholic",
+              "Independent"
+            ],
+            "range": [
+              "#3d6b8a",
+              "#a75b3b",
+              "#347d72"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "sector",
+            "title": "Sector",
+            "type": "nominal"
+          },
+          {
+            "field": "region",
+            "title": "Region",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "title": "School records",
+            "type": "quantitative",
+            "format": ",d"
+          },
+          {
+            "field": "share",
+            "title": "Share within region",
+            "type": "quantitative",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#233441",
+        "align": {
+          "expr": "datum.signed<0?'right':'left'"
+        },
+        "dx": {
+          "expr": "datum.signed<0?-6:6"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "signed",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share",
+          "format": ".1%"
+        }
+      },
+      "transform": []
+    }
+  ]
+}
