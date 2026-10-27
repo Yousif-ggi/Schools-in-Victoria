@@ -1,29 +1,14 @@
 # Schools in Victoria
+Data Visualisation 2 — final version, Yousif Gaggi.
 
-Data Visualisation 2 — Draft V2, by Yousif Gaggi.
+A narrative about school location, sector, type, enrolment and population-related community needs. Uses 2026 school-level records, June 2025 ABS population, and VIF2023 Release 2 projections for 2026–2036. See methodology.html for sources, duplicate handling, historical-series differences and interpretation limits.
 
-**Public visualisation:** https://Yousif-ggi.github.io/Schools-in-Victoria/
+13 charts; 3 different map idioms; 10 distinct advanced idioms under the supplied course list. Repeated connected-dot charts count once as a distinct idiom.
 
-Twelve visualisations explore school locations, sectors, school types, enrolment and residents aged 5–19. The geographic analysis combines official 2025 Department of Education and ABS data. A separate historical chart includes the latest 2026 school counts.
+Serve this directory using a static HTTP server. index.html loads local charts, data, fonts and vendor libraries. School and projection source data retain their publishers’ licences; libraries and fonts retain their own notices.
 
-## Run locally
+Public visualisation: https://Yousif-ggi.github.io/Schools-in-Victoria/
 
-Serve this directory with any static web server, for example `python -m http.server 8000`, then visit `http://localhost:8000`. Opening index.html directly as a file does not support the required JSON fetches.
+Hand-drawn sketch: https://Yousif-ggi.github.io/Schools-in-Victoria/sketch.pdf
 
-## Files
-
-- `index.html`, `styles.css`, `app.js`: page, layout and chart loader.
-- `specs/`: twelve readable Vega/Vega-Lite specifications.
-- `data/`: derived official data and simplified boundaries.
-- `vendor/`: pinned chart libraries and their licence notices.
-- [Methodology](methodology.md): sources, processing, encodings, checks and limitations.
-
-## GitHub Pages
-
-Publish from branch `main`, folder `/ (root)`. No build step is required.
-
-## Draft status
-
-Prepared for studio critique on layout, chart choices, legibility and storytelling. It is not labelled as the final assessment submission. The hand-drawn A4 sketch is separate.
-
-Source data retain their publishers' licences and attribution; the chart libraries retain their own licences.
+Files: `index.html` is the page; `css/` contains styling; `js/` loads the charts; `charts/` contains the 13 chart specifications; `data/` contains processed data; `methodology.html` explains sources and methods.
