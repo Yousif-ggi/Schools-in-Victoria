@@ -1,0 +1,15 @@
+{
+  "checked": "2026-10-27",
+  "school_locations": "https://content.vic.gov.au/DE-School-Locations%20-2026",
+  "fte": "https://content.vic.gov.au/DE-All-Schools-Enrolments-2026",
+  "projection": "https://www.planning.vic.gov.au/__data/assets/excel_doc/0032/691655/VIF2023_LGA_VIFSA_Pop_Age_Sex_Projections_to_2036_Release_2.xlsx",
+  "school_location_rows": 2320,
+  "unique_school_keys": 2319,
+  "duplicate_resolution": "Independent 1946: retain registered Strathdale main location; count whole-school FTE once.",
+  "population_reference": "June 2025",
+  "projection_endpoints": [
+    2026,
+    2036
+  ],
+  "historical_series_difference": "2026 summary has 233 Independent schools; school-level files have 232."
+}
